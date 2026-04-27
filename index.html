@@ -1,0 +1,1160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Promised One — A Quiet Study</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Spectral:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #2a1f17;
+    --ink-soft: #4a3a2c;
+    --ink-faded: #6b5a48;
+    --parchment: #f5ede0;
+    --parchment-deep: #ebdfc9;
+    --parchment-light: #faf5ea;
+    --gold: #9a7a3c;
+    --gold-deep: #6b5320;
+    --crimson: #7a2e2e;
+    --rule: #c9b896;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--parchment);
+    background-image:
+      radial-gradient(ellipse at top left, rgba(154, 122, 60, 0.08), transparent 60%),
+      radial-gradient(ellipse at bottom right, rgba(122, 46, 46, 0.05), transparent 60%);
+    color: var(--ink);
+    font-family: 'Lora', Georgia, serif;
+    font-size: 18px;
+    line-height: 1.7;
+    padding: 60px 30px;
+    min-height: 100vh;
+  }
+
+  /* Subtle paper grain */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0.4 0 0 0 0 0.3 0 0 0 0 0.2 0 0 0 0.08 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity: 0.6;
+    mix-blend-mode: multiply;
+    z-index: 1;
+  }
+
+  .container {
+    max-width: 920px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* ====== Masthead ====== */
+  .masthead {
+    text-align: center;
+    padding: 30px 0 50px;
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 60px;
+    position: relative;
+  }
+
+  .masthead::after {
+    content: '✦';
+    position: absolute;
+    bottom: -14px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--parchment);
+    padding: 0 16px;
+    color: var(--gold);
+    font-size: 18px;
+  }
+
+  .eyebrow {
+    font-family: 'Spectral', serif;
+    letter-spacing: 0.45em;
+    font-size: 11px;
+    color: var(--gold-deep);
+    margin-bottom: 24px;
+    text-transform: uppercase;
+  }
+
+  h1.title {
+    font-family: 'Spectral', serif;
+    font-weight: 500;
+    font-size: clamp(2.8rem, 6vw, 4.5rem);
+    line-height: 1.05;
+    color: var(--ink);
+    margin-bottom: 18px;
+    font-style: italic;
+  }
+
+  h1.title .ornament {
+    display: block;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 0.45em;
+    color: var(--gold-deep);
+    letter-spacing: 0.3em;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+  }
+
+  .subtitle {
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 1.15rem;
+    color: var(--ink-soft);
+    max-width: 580px;
+    margin: 0 auto;
+  }
+
+  /* ====== Friend's Note ====== */
+  .friend-note {
+    background: linear-gradient(135deg, rgba(154, 122, 60, 0.06), rgba(122, 46, 46, 0.04));
+    border-left: 3px solid var(--gold);
+    padding: 28px 36px;
+    margin-bottom: 60px;
+    font-style: italic;
+    color: var(--ink-soft);
+    position: relative;
+  }
+
+  .friend-note::before {
+    content: '"';
+    position: absolute;
+    top: -10px;
+    left: 18px;
+    font-family: 'Spectral', serif;
+    font-size: 80px;
+    color: var(--gold);
+    opacity: 0.3;
+    line-height: 1;
+  }
+
+  .friend-note p { margin-bottom: 10px; }
+  .friend-note p:last-child { margin-bottom: 0; }
+
+  /* ====== Sections ====== */
+  section {
+    margin-bottom: 70px;
+  }
+
+  .section-num {
+    font-family: 'Spectral', serif;
+    font-size: 11px;
+    letter-spacing: 0.4em;
+    color: var(--gold-deep);
+    margin-bottom: 12px;
+  }
+
+  h2 {
+    font-family: 'Spectral', serif;
+    font-weight: 500;
+    font-size: clamp(1.9rem, 3.5vw, 2.6rem);
+    color: var(--ink);
+    line-height: 1.15;
+    margin-bottom: 8px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--rule);
+    position: relative;
+  }
+
+  h2 .accent {
+    font-style: italic;
+    color: var(--crimson);
+  }
+
+  .lede {
+    font-family: 'Lora', serif;
+    font-size: 1.1rem;
+    color: var(--ink-soft);
+    margin-top: 18px;
+    margin-bottom: 28px;
+    max-width: 720px;
+    font-style: italic;
+  }
+
+  /* ====== Verse Cards ====== */
+  .verse {
+    background: var(--parchment-light);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    padding: 22px 26px;
+    margin-bottom: 18px;
+    position: relative;
+    box-shadow: 0 1px 0 rgba(154, 122, 60, 0.1);
+  }
+
+  .verse-ref {
+    font-family: 'Spectral', serif;
+    font-weight: 600;
+    font-size: 1.05rem;
+    letter-spacing: 0.08em;
+    color: var(--crimson);
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--rule);
+    display: inline-block;
+    text-transform: none;
+  }
+
+  .verse-text {
+    font-family: 'Lora', serif;
+    font-size: 1.1rem;
+    color: var(--ink);
+    line-height: 1.65;
+    font-style: italic;
+  }
+
+  .verse-text::before { content: '"'; }
+  .verse-text::after { content: '"'; }
+
+  /* ====== Two-column type comparison ====== */
+  .type-card {
+    margin-bottom: 50px;
+    padding-bottom: 50px;
+    border-bottom: 1px dashed var(--rule);
+  }
+
+  .type-card:last-child {
+    border-bottom: none;
+  }
+
+  .type-header {
+    display: flex;
+    align-items: baseline;
+    gap: 20px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+
+  .type-number {
+    font-family: 'Spectral', serif;
+    font-size: 3rem;
+    font-weight: 300;
+    color: var(--gold);
+    line-height: 1;
+    font-style: italic;
+  }
+
+  .type-title {
+    font-family: 'Spectral', serif;
+    font-size: 1.8rem;
+    font-weight: 500;
+    color: var(--ink);
+    line-height: 1.2;
+  }
+
+  .type-ref {
+    font-family: 'Lora', serif;
+    font-style: italic;
+    color: var(--ink-faded);
+    font-size: 1rem;
+    margin-left: auto;
+  }
+
+  .parallel-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    margin-top: 20px;
+    border: 1px solid var(--rule);
+    background: var(--parchment-light);
+  }
+
+  .parallel-col {
+    padding: 24px 26px;
+  }
+
+  .parallel-col:first-child {
+    border-right: 1px solid var(--rule);
+    background: rgba(154, 122, 60, 0.04);
+  }
+
+  .col-label {
+    font-family: 'Spectral', serif;
+    font-size: 10px;
+    letter-spacing: 0.35em;
+    color: var(--gold-deep);
+    margin-bottom: 14px;
+    text-transform: uppercase;
+  }
+
+  .col-content {
+    font-family: 'Lora', serif;
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--ink);
+  }
+
+  .col-content ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .col-content li {
+    padding: 6px 0 6px 18px;
+    position: relative;
+    border-bottom: 1px dotted rgba(154, 122, 60, 0.3);
+  }
+
+  .col-content li:last-child {
+    border-bottom: none;
+  }
+
+  .col-content li::before {
+    content: '◦';
+    position: absolute;
+    left: 0;
+    color: var(--gold);
+  }
+
+  /* Inline scripture references — rendered as links to BibleGateway ESV */
+  .ref, a.ref {
+    font-family: 'Spectral', serif;
+    font-weight: 600;
+    color: var(--crimson);
+    font-style: normal;
+    white-space: nowrap;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    border-bottom: 1px dotted rgba(122, 46, 46, 0.4);
+    transition: color 0.15s, border-color 0.15s, background 0.15s;
+  }
+
+  a.ref:hover {
+    color: var(--gold-deep);
+    border-bottom-color: var(--gold);
+    background: rgba(154, 122, 60, 0.08);
+  }
+
+  a.ref:visited {
+    color: var(--crimson);
+  }
+
+  /* Make verse-ref headers also clickable links */
+  a.verse-ref-link {
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  a.verse-ref-link:hover .verse-ref {
+    color: var(--gold-deep);
+    border-bottom-color: var(--gold);
+  }
+
+  .key-verse {
+    margin-top: 20px;
+    padding: 16px 22px;
+    background: rgba(122, 46, 46, 0.04);
+    border-left: 2px solid var(--crimson);
+    font-style: italic;
+    color: var(--ink-soft);
+    font-size: 0.98rem;
+  }
+
+  .key-verse strong {
+    font-style: normal;
+    font-family: 'Spectral', serif;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    color: var(--crimson);
+    display: block;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  /* ====== The atonement section ====== */
+  .meaning-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+    margin-top: 24px;
+  }
+
+  .meaning-card {
+    background: var(--parchment-light);
+    border: 1px solid var(--rule);
+    padding: 24px 22px;
+    position: relative;
+  }
+
+  .meaning-card .symbol {
+    font-family: 'Spectral', serif;
+    font-size: 2rem;
+    color: var(--gold);
+    font-style: italic;
+    line-height: 1;
+    margin-bottom: 12px;
+  }
+
+  .meaning-card h3 {
+    font-family: 'Spectral', serif;
+    font-size: 1.3rem;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 10px;
+  }
+
+  .meaning-card p {
+    font-size: 0.96rem;
+    color: var(--ink-soft);
+    line-height: 1.55;
+  }
+
+  /* ====== Closing ====== */
+  .closing {
+    text-align: center;
+    padding: 50px 20px;
+    border-top: 1px solid var(--rule);
+    margin-top: 40px;
+  }
+
+  .closing-mark {
+    font-family: 'Spectral', serif;
+    font-size: 24px;
+    color: var(--gold);
+    margin-bottom: 20px;
+    letter-spacing: 0.4em;
+  }
+
+  .closing p {
+    font-style: italic;
+    color: var(--ink-soft);
+    max-width: 600px;
+    margin: 0 auto 12px;
+    font-size: 1.05rem;
+  }
+
+  .closing .signature {
+    font-family: 'Spectral', serif;
+    color: var(--ink-faded);
+    font-size: 0.95rem;
+    margin-top: 24px;
+    letter-spacing: 0.1em;
+  }
+
+  /* ====== Companion link to next study ====== */
+  .companion {
+    margin: 60px 0 0;
+    padding: 0;
+    background: var(--parchment-light);
+    border: 1px solid var(--rule);
+    border-top: 3px solid var(--gold);
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    transition: transform 0.2s, box-shadow 0.2s, border-top-color 0.2s;
+  }
+
+  .companion:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(42, 31, 23, 0.12);
+    border-top-color: var(--crimson);
+  }
+
+  .companion-inner {
+    padding: 38px 44px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 32px;
+    align-items: center;
+  }
+
+  .companion-content { min-width: 0; }
+
+  .companion-eyebrow {
+    font-family: 'Spectral', serif;
+    font-size: 10px;
+    letter-spacing: 0.45em;
+    color: var(--gold-deep);
+    margin-bottom: 14px;
+    text-transform: uppercase;
+  }
+
+  .companion-title {
+    font-family: 'Spectral', serif;
+    font-style: italic;
+    font-weight: 500;
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    color: var(--ink);
+    line-height: 1.15;
+    margin-bottom: 12px;
+  }
+
+  .companion-desc {
+    font-family: 'Lora', serif;
+    font-size: 1rem;
+    color: var(--ink-soft);
+    line-height: 1.7;
+    font-style: italic;
+  }
+
+  .companion-arrow {
+    font-family: 'Spectral', serif;
+    font-size: 2.5rem;
+    color: var(--gold);
+    font-weight: 300;
+    line-height: 1;
+    transition: transform 0.2s, color 0.2s;
+    flex-shrink: 0;
+  }
+
+  .companion:hover .companion-arrow {
+    transform: translateX(6px);
+    color: var(--crimson);
+  }
+
+  /* "Back" variant for the second page */
+  .companion.back .companion-arrow { order: -1; }
+  .companion.back .companion-inner { grid-template-columns: auto 1fr; }
+  .companion.back:hover .companion-arrow { transform: translateX(-6px); }
+
+  /* Emmaus benediction */
+  .benediction {
+    margin-top: 60px;
+    padding: 50px 40px;
+    background:
+      linear-gradient(135deg, rgba(122, 46, 46, 0.06), rgba(154, 122, 60, 0.08)),
+      var(--parchment-light);
+    border: 1px solid var(--rule);
+    border-top: 3px double var(--gold);
+    border-bottom: 3px double var(--gold);
+    text-align: center;
+    position: relative;
+  }
+
+  .benediction-label {
+    font-family: 'Spectral', serif;
+    font-size: 11px;
+    letter-spacing: 0.45em;
+    color: var(--gold-deep);
+    margin-bottom: 18px;
+    text-transform: uppercase;
+  }
+
+  .benediction h3 {
+    font-family: 'Spectral', serif;
+    font-style: italic;
+    font-weight: 500;
+    font-size: clamp(1.7rem, 3vw, 2.3rem);
+    color: var(--ink);
+    margin-bottom: 28px;
+    line-height: 1.2;
+  }
+
+  .benediction-verse {
+    background: rgba(255, 255, 255, 0.4);
+    border-left: 2px solid var(--crimson);
+    padding: 22px 28px;
+    margin: 0 auto 28px;
+    max-width: 640px;
+    text-align: left;
+  }
+
+  .benediction-verse .verse-ref {
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .benediction-verse-text {
+    font-style: italic;
+    font-size: 1.08rem;
+    line-height: 1.65;
+    color: var(--ink);
+  }
+
+  .benediction p {
+    font-family: 'Lora', serif;
+    font-size: 1.08rem;
+    line-height: 1.7;
+    color: var(--ink-soft);
+    max-width: 640px;
+    margin: 0 auto 18px;
+    font-style: italic;
+  }
+
+  .benediction p.prayer {
+    font-style: normal;
+    color: var(--ink);
+    font-size: 1.12rem;
+    margin-top: 30px;
+    padding-top: 30px;
+    border-top: 1px solid var(--rule);
+  }
+
+  .benediction-flame {
+    font-size: 28px;
+    color: var(--crimson);
+    margin: 20px 0;
+    letter-spacing: 0.3em;
+  }
+
+  /* Drop cap for opening paragraph of major sections */
+  .with-dropcap::first-letter {
+    font-family: 'Spectral', serif;
+    font-size: 4rem;
+    font-weight: 500;
+    float: left;
+    line-height: 0.85;
+    padding: 4px 8px 0 0;
+    color: var(--crimson);
+    font-style: italic;
+  }
+
+  /* ====== Mobile ====== */
+  @media (max-width: 700px) {
+    body { padding: 30px 18px; font-size: 16px; }
+    .parallel-grid { grid-template-columns: 1fr; }
+    .parallel-col:first-child {
+      border-right: none;
+      border-bottom: 1px solid var(--rule);
+    }
+    .friend-note { padding: 22px 22px 22px 26px; }
+    .type-ref { margin-left: 0; }
+    .companion-inner {
+      grid-template-columns: 1fr;
+      gap: 16px;
+      padding: 28px 26px;
+    }
+    .companion-arrow { font-size: 2rem; }
+    .companion.back .companion-inner { grid-template-columns: 1fr; }
+  }
+
+  @media print {
+    body { background: white; padding: 20px; }
+    body::before { display: none; }
+    .verse, .meaning-card, .parallel-grid { break-inside: avoid; }
+    section { break-inside: avoid; }
+    .companion { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- ============ MASTHEAD ============ -->
+  <header class="masthead">
+    <div class="eyebrow">A Quiet Study · For a Friend</div>
+    <h1 class="title">
+      <span class="ornament">~ Shadows &amp; Echoes ~</span>
+      The Promised One <em>in</em> the<br>Hebrew Scriptures
+    </h1>
+    <p class="subtitle">A reference companion — the death and rising of Jesus, and the way the older books seem to whisper of him long before he came.</p>
+  </header>
+
+  <!-- ============ FRIEND'S NOTE ============ -->
+  <div class="friend-note">
+    <p>This is meant simply — as a study sheet. Not an argument, not a debate. Just the verses themselves, laid side by side, so you can read them slowly and weigh them honestly.</p>
+    <p>You and I share a deep reverence for Abraham, Moses, David, and the prophets. What follows are passages from <em>their</em> books — books your tradition also honors as sent down — alongside what the Christian scriptures say happened in Jesus. Read them as a friend who is curious. Nothing more is asked.</p>
+  </div>
+
+  <!-- ============ SECTION 1: THE EVENT ============ -->
+  <section>
+    <div class="section-num">I · The Account</div>
+    <h2>What the Gospels say <span class="accent">happened</span></h2>
+    <p class="lede">Before looking at the shadows, here is the substance — the death and resurrection of Jesus as the Christian scriptures record them. The verses below are the heart of the claim.</p>
+
+    <div class="verse">
+      <div class="verse-ref">1 Corinthians 15:3–4</div>
+      <div class="verse-text">For what I received I passed on to you as of first importance: that the Messiah died for our sins according to the Scriptures, that he was buried, that he was raised on the third day according to the Scriptures.</div>
+    </div>
+
+    <div class="verse">
+      <div class="verse-ref">John 19:30</div>
+      <div class="verse-text">When he had received the drink, Jesus said, "It is finished." With that, he bowed his head and gave up his spirit.</div>
+    </div>
+
+    <div class="verse">
+      <div class="verse-ref">Luke 24:5–7</div>
+      <div class="verse-text">"Why do you look for the living among the dead? He is not here; he has risen! Remember how he told you, while he was still with you in Galilee: 'The Son of Man must be delivered over to the hands of sinners, be crucified and on the third day be raised again.'"</div>
+    </div>
+
+    <div class="verse">
+      <div class="verse-ref">Romans 4:25</div>
+      <div class="verse-text">He was delivered over to death for our sins and was raised to life for our justification.</div>
+    </div>
+
+    <div class="verse">
+      <div class="verse-ref">1 Peter 2:24</div>
+      <div class="verse-text">He himself bore our sins in his body on the cross, so that we might die to sins and live for righteousness; by his wounds you have been healed.</div>
+    </div>
+  </section>
+
+  <!-- ============ SECTION 2: THE MEANING ============ -->
+  <section>
+    <div class="section-num">II · The Meaning</div>
+    <h2>What the <span class="accent">atonement</span> is</h2>
+    <p class="lede with-dropcap">In the Hebrew Bible, sin is taken seriously — it separates a person from God, and a price is paid to cover it. The word <em>atonement</em> means "to cover" or "to reconcile." Christians believe Jesus willingly bore that cost on behalf of those who could not bear it themselves — not because God lacked mercy, but because his mercy and his justice met perfectly in one act of self-giving love.</p>
+
+    <div class="meaning-grid">
+      <div class="meaning-card">
+        <div class="symbol">i.</div>
+        <h3>Substitution</h3>
+        <p>One stands in the place of another. The innocent bears what the guilty owed — a pattern visible in every sacrifice from Eden onward.</p>
+      </div>
+      <div class="meaning-card">
+        <div class="symbol">ii.</div>
+        <h3>Covering</h3>
+        <p>Sin is not ignored, but covered — the way Adam and Eve were clothed by God himself with skins from a slain animal.</p>
+      </div>
+      <div class="meaning-card">
+        <div class="symbol">iii.</div>
+        <h3>Reconciliation</h3>
+        <p>Distance becomes nearness. What was broken between humanity and God is mended through one perfect mediator.</p>
+      </div>
+      <div class="meaning-card">
+        <div class="symbol">iv.</div>
+        <h3>Victory</h3>
+        <p>Death itself is swallowed up. The resurrection is God's public declaration that the offering was accepted and the curse undone.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SECTION 3: THE TYPES ============ -->
+  <section>
+    <div class="section-num">III · The Foreshadowings</div>
+    <h2>Shadows of the cross in the <span class="accent">older books</span></h2>
+    <p class="lede">Christians read the Hebrew Scriptures and see a pattern: the same story sketched again and again in different keys, until the One it pointed to finally arrived. Here are the most striking — read each Hebrew passage on its own first, then compare.</p>
+
+    <!-- TYPE 1: ABRAHAM & ISAAC -->
+    <div class="type-card">
+      <div class="type-header">
+        <div class="type-number">i.</div>
+        <div>
+          <div class="type-title">Abraham &amp; the Beloved Son</div>
+          <div class="type-ref">Genesis 22</div>
+        </div>
+      </div>
+      <p>A father takes his only beloved son to a mountain — Moriah, the very place where Jerusalem would later stand. The son carries the wood of his own sacrifice up the hill. At the last moment, a ram caught in a thicket dies in the son's place, and Abraham names the place <em>The Lord Will Provide</em>.</p>
+
+      <div class="parallel-grid">
+        <div class="parallel-col">
+          <div class="col-label">In Genesis</div>
+          <div class="col-content">
+            <ul>
+              <li>"Take your son, your only son, whom you love" <span class="ref">(Gen 22:2)</span></li>
+              <li>Isaac carries the wood up the mountain <span class="ref">(Gen 22:6)</span></li>
+              <li>"God himself will provide the lamb" <span class="ref">(Gen 22:8)</span></li>
+              <li>A ram dies <em>in place of</em> the son <span class="ref">(Gen 22:13)</span></li>
+              <li>Mount Moriah — same region as Jerusalem <span class="ref">(Gen 22:2; 2 Chr 3:1)</span></li>
+            </ul>
+          </div>
+        </div>
+        <div class="parallel-col">
+          <div class="col-label">In the Gospels</div>
+          <div class="col-content">
+            <ul>
+              <li>"This is my Son, whom I love" <span class="ref">(Matt 3:17)</span></li>
+              <li>Jesus carries his cross up the hill <span class="ref">(John 19:17)</span></li>
+              <li>John calls him "the Lamb of God" <span class="ref">(John 1:29)</span></li>
+              <li>The Son dies; we go free <span class="ref">(Rom 8:32)</span></li>
+              <li>Crucified just outside Jerusalem</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="key-verse">
+        <strong>Worth pausing on</strong>
+        <span class="ref">Romans 8:32</span> — "He who did not spare his own Son, but gave him up for us all..." The wording deliberately echoes <span class="ref">Genesis 22:12</span>, where God says to Abraham, "you have not withheld your son." What Abraham was spared from doing, Christians say God himself did.
+      </div>
+    </div>
+
+    <!-- TYPE 2: JOSEPH -->
+    <div class="type-card">
+      <div class="type-header">
+        <div class="type-number">ii.</div>
+        <div>
+          <div class="type-title">Joseph — the Rejected Brother</div>
+          <div class="type-ref">Genesis 37–50</div>
+        </div>
+      </div>
+      <p>Joseph (Yusuf) is one of the most beloved figures in both our traditions. The parallels with Jesus are remarkable — and the moment he reveals himself to his brothers is one of the most moving scenes in all of scripture.</p>
+
+      <div class="parallel-grid">
+        <div class="parallel-col">
+          <div class="col-label">In Joseph's Life</div>
+          <div class="col-content">
+            <ul>
+              <li>The beloved son of his father</li>
+              <li>Rejected and betrayed by his own brothers</li>
+              <li>Sold for pieces of silver <span class="ref">(Gen 37:28)</span></li>
+              <li>Falsely accused, condemned though innocent</li>
+              <li>Counted among criminals in prison</li>
+              <li>Raised up to the right hand of Pharaoh</li>
+              <li>Becomes the <em>only</em> source of bread that saves the world from death <span class="ref">(Gen 41:57)</span></li>
+              <li>His brothers don't recognize him when they meet him</li>
+            </ul>
+          </div>
+        </div>
+        <div class="parallel-col">
+          <div class="col-label">In Jesus' Life</div>
+          <div class="col-content">
+            <ul>
+              <li>"This is my beloved Son" <span class="ref">(Mark 1:11)</span></li>
+              <li>Rejected by his own people <span class="ref">(John 1:11)</span></li>
+              <li>Betrayed for thirty pieces of silver <span class="ref">(Matt 26:15)</span></li>
+              <li>Falsely accused, condemned though innocent</li>
+              <li>Crucified between two criminals <span class="ref">(Luke 23:33)</span></li>
+              <li>Raised up to the right hand of God <span class="ref">(Acts 2:33)</span></li>
+              <li>"I am the bread of life" <span class="ref">(John 6:35)</span></li>
+              <li>Disciples on the Emmaus road don't recognize him <span class="ref">(Luke 24:16)</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="key-verse">
+        <strong>The reveal — Genesis 45 &amp; Isaiah 53</strong>
+        Read Joseph's words to his terrified brothers: "I am Joseph your brother, whom you sold... do not be distressed... God sent me ahead of you to save lives" <span class="ref">(Gen 45:4–5)</span>. Then read <span class="ref">Isaiah 53</span> — written centuries later — where the suffering servant is "despised and rejected," "wounded for our transgressions," and yet turns out to be the one through whom God saves his people. The pattern is the same: the one we wronged is the very one who saves us. Christians believe this is what happens at the cross.
+      </div>
+    </div>
+
+    <!-- TYPE 3: PASSOVER -->
+    <div class="type-card">
+      <div class="type-header">
+        <div class="type-number">iii.</div>
+        <div>
+          <div class="type-title">The Passover Lamb</div>
+          <div class="type-ref">Exodus 12</div>
+        </div>
+      </div>
+      <p>On the night Israel was rescued from Egypt, every household took a lamb — without blemish, a male in its first year — slaughtered it, and painted its blood on the doorposts. When death passed through the land, it <em>passed over</em> every house marked by the blood. The lamb died so the firstborn would live.</p>
+
+      <div class="parallel-grid">
+        <div class="parallel-col">
+          <div class="col-label">The Passover Lamb</div>
+          <div class="col-content">
+            <ul>
+              <li>A lamb without defect <span class="ref">(Ex 12:5)</span></li>
+              <li>"Not one of its bones shall be broken" <span class="ref">(Ex 12:46)</span></li>
+              <li>Selected on the 10th, killed on the 14th of Nisan</li>
+              <li>Blood on the wood of the doorposts</li>
+              <li>Death passes over those covered by the blood</li>
+              <li>Eaten — the people take the lamb into themselves</li>
+            </ul>
+          </div>
+        </div>
+        <div class="parallel-col">
+          <div class="col-label">Jesus at Passover</div>
+          <div class="col-content">
+            <ul>
+              <li>"A lamb without blemish or defect" <span class="ref">(1 Pet 1:19)</span></li>
+              <li>"Not one of his bones will be broken" <span class="ref">(John 19:36)</span></li>
+              <li>Enters Jerusalem on the 10th, dies on the 14th — Passover</li>
+              <li>His blood on the wood of the cross</li>
+              <li>"Christ, our Passover lamb, has been sacrificed" <span class="ref">(1 Cor 5:7)</span></li>
+              <li>"This is my body... given for you" <span class="ref">(Luke 22:19)</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="key-verse">
+        <strong>John the Baptist's word</strong>
+        <span class="ref">John 1:29</span> — "Look, the Lamb of God, who takes away the sin of the world!" A first-century Jew, steeped in the Passover, hearing those words on the eve of Passover season — would have understood exactly what was being claimed.
+      </div>
+    </div>
+
+    <!-- TYPE 4: BRONZE SERPENT -->
+    <div class="type-card">
+      <div class="type-header">
+        <div class="type-number">iv.</div>
+        <div>
+          <div class="type-title">The Serpent Lifted Up</div>
+          <div class="type-ref">Numbers 21:4–9</div>
+        </div>
+      </div>
+      <p>In the wilderness, the people are bitten by venomous snakes and dying. God tells Moses to make a bronze serpent and lift it up on a pole. Anyone bitten — anyone at all — only has to <em>look</em> at it and they will live. Salvation by sight. By trust.</p>
+
+      <div class="parallel-grid">
+        <div class="parallel-col">
+          <div class="col-label">In the Wilderness</div>
+          <div class="col-content">
+            <ul>
+              <li>The people are dying from a deadly bite</li>
+              <li>Moses lifts up the bronze serpent on a pole</li>
+              <li>The image of the curse becomes the means of healing</li>
+              <li>Whoever looks in faith lives — no other requirement</li>
+            </ul>
+          </div>
+        </div>
+        <div class="parallel-col">
+          <div class="col-label">Jesus' Own Words</div>
+          <div class="col-content">
+            <ul>
+              <li>Humanity dying in sin <span class="ref">(Rom 6:23)</span></li>
+              <li>Jesus lifted up on the cross</li>
+              <li>"Becoming a curse for us" <span class="ref">(Gal 3:13)</span></li>
+              <li>"Whoever believes may have eternal life in him" <span class="ref">(John 3:15)</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="key-verse">
+        <strong>Jesus draws the line himself — <span class="ref">John 3:14–15</span></strong>
+        "Just as Moses lifted up the snake in the wilderness, so the Son of Man must be lifted up, that everyone who believes may have eternal life in him." Jesus is the one who tells us to read <span class="ref">Numbers 21</span> this way. Worth weighing carefully.
+      </div>
+    </div>
+
+    <!-- TYPE 5: PSALM 22 -->
+    <div class="type-card">
+      <div class="type-header">
+        <div class="type-number">v.</div>
+        <div>
+          <div class="type-title">Psalm 22 — David's Strange Song</div>
+          <div class="type-ref">Psalm 22 (c. 1000 BC)</div>
+        </div>
+      </div>
+      <p>David writes a psalm about his own suffering — but it describes things that never happened to David. Written roughly a thousand years before crucifixion was even invented as a Roman execution method, it reads like an eyewitness account of one. Read it slowly and on its own.</p>
+
+      <div class="parallel-grid">
+        <div class="parallel-col">
+          <div class="col-label">Psalm 22 (1000 BC)</div>
+          <div class="col-content">
+            <ul>
+              <li><span class="ref">v.1</span> — "My God, my God, why have you forsaken me?"</li>
+              <li><span class="ref">v.7</span> — "All who see me mock me; they hurl insults, shaking their heads"</li>
+              <li><span class="ref">v.8</span> — "He trusts in the Lord; let the Lord rescue him"</li>
+              <li><span class="ref">v.14</span> — "All my bones are out of joint... my heart has melted"</li>
+              <li><span class="ref">v.15</span> — "My tongue sticks to the roof of my mouth"</li>
+              <li><span class="ref">v.16</span> — "They pierce my hands and my feet"</li>
+              <li><span class="ref">v.18</span> — "They divide my clothes among them and cast lots for my garment"</li>
+              <li><span class="ref">v.31</span> — ends with "He has done it" — finished, accomplished</li>
+            </ul>
+          </div>
+        </div>
+        <div class="parallel-col">
+          <div class="col-label">At the Crucifixion</div>
+          <div class="col-content">
+            <ul>
+              <li>Jesus quotes this exact verse from the cross <span class="ref">(Matt 27:46)</span></li>
+              <li>"Those who passed by hurled insults, shaking their heads" <span class="ref">(Matt 27:39)</span></li>
+              <li>Mocked with these very words <span class="ref">(Matt 27:43)</span></li>
+              <li>The physical effects of crucifixion — dehydration, dislocation</li>
+              <li>"I am thirsty" <span class="ref">(John 19:28)</span></li>
+              <li>His hands and feet pierced by Roman nails</li>
+              <li>Soldiers cast lots for his clothing <span class="ref">(John 19:23–24)</span></li>
+              <li>His final word: "It is finished" <span class="ref">(John 19:30)</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="key-verse">
+        <strong>Read it cold, then read Matthew 27</strong>
+        The most honest thing to do is to read <span class="ref">Psalm 22</span> entirely on its own — without any commentary — then read the crucifixion accounts in <span class="ref">Matthew 27</span> and <span class="ref">John 19</span>. The piercing of hands and feet is especially striking: the psalm was written long before crucifixion existed as a form of execution.
+      </div>
+    </div>
+
+    <!-- TYPE 6: ISAIAH 53 -->
+    <div class="type-card">
+      <div class="type-header">
+        <div class="type-number">vi.</div>
+        <div>
+          <div class="type-title">Isaiah 53 — The Suffering Servant</div>
+          <div class="type-ref">Isaiah 52:13 – 53:12 (c. 700 BC)</div>
+        </div>
+      </div>
+      <p>This is perhaps the most extraordinary passage in the Hebrew Bible. Written some seven hundred years before Jesus, it describes a servant of God who suffers and dies for the sins of others, and is then mysteriously vindicated. Read it whole, in one sitting, before reading anything else about it.</p>
+
+      <div class="parallel-grid">
+        <div class="parallel-col">
+          <div class="col-label">Isaiah's Servant (700 BC)</div>
+          <div class="col-content">
+            <ul>
+              <li><span class="ref">53:3</span> — "Despised and rejected by men, a man of sorrows"</li>
+              <li><span class="ref">53:5</span> — "Pierced for our transgressions, crushed for our iniquities"</li>
+              <li><span class="ref">53:5</span> — "By his wounds we are healed"</li>
+              <li><span class="ref">53:6</span> — "The Lord has laid on him the iniquity of us all"</li>
+              <li><span class="ref">53:7</span> — "Like a lamb led to the slaughter... he did not open his mouth"</li>
+              <li><span class="ref">53:8</span> — "Cut off from the land of the living"</li>
+              <li><span class="ref">53:9</span> — "Assigned a grave with the wicked, with the rich in his death"</li>
+              <li><span class="ref">53:10</span> — "His life an offering for sin"</li>
+              <li><span class="ref">53:11</span> — "After he has suffered, he will see the light of life"</li>
+              <li><span class="ref">53:12</span> — "Numbered with the transgressors... bore the sin of many"</li>
+            </ul>
+          </div>
+        </div>
+        <div class="parallel-col">
+          <div class="col-label">Jesus</div>
+          <div class="col-content">
+            <ul>
+              <li>"He came to his own, and his own did not receive him" <span class="ref">(John 1:11)</span></li>
+              <li>Pierced — hands, feet, side</li>
+              <li>"By his wounds you have been healed" <span class="ref">(1 Pet 2:24)</span></li>
+              <li>"For our sake he made him to be sin" <span class="ref">(2 Cor 5:21)</span></li>
+              <li>"He was silent and gave no answer" <span class="ref">(Mark 14:61)</span></li>
+              <li>Killed outside Jerusalem</li>
+              <li>Crucified with criminals; buried in the rich man Joseph of Arimathea's tomb <span class="ref">(Matt 27:57–60)</span></li>
+              <li>"A ransom for many" <span class="ref">(Mark 10:45)</span></li>
+              <li>The resurrection — "he sees light"</li>
+              <li>Crucified between two thieves; "Father, forgive them" <span class="ref">(Luke 23:34)</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="key-verse">
+        <strong>The mirror of Joseph</strong>
+        Notice how <span class="ref">Isaiah 53</span> echoes the story of Joseph: the rejected, suffering one turns out to be the one through whom many are saved. "What you intended for evil, God intended for good, to save many lives" <span class="ref">(Gen 50:20)</span>. The Christian claim is that this pattern reaches its fullness in Jesus — the brother we did not recognize, who saves us anyway.
+      </div>
+    </div>
+
+    <!-- TYPE 7: ZECHARIAH 12 -->
+    <div class="type-card">
+      <div class="type-header">
+        <div class="type-number">vii.</div>
+        <div>
+          <div class="type-title">The Pierced One</div>
+          <div class="type-ref">Zechariah 12:10 · Psalm 16:10 · Daniel 9:26</div>
+        </div>
+      </div>
+      <p>Three smaller but striking witnesses — pieces of the picture worth knowing about.</p>
+
+      <div class="verse">
+        <div class="verse-ref">Zechariah 12:10 — c. 500 BC</div>
+        <div class="verse-text">They will look on me, the one they have pierced, and they will mourn for him as one mourns for an only child.</div>
+      </div>
+
+      <div class="verse">
+        <div class="verse-ref">Psalm 16:10 — c. 1000 BC</div>
+        <div class="verse-text">You will not abandon me to the realm of the dead, nor will you let your faithful one see decay.</div>
+      </div>
+
+      <div class="verse">
+        <div class="verse-ref">Daniel 9:26 — c. 530 BC</div>
+        <div class="verse-text">After the sixty-two 'sevens,' the Anointed One will be cut off and will have nothing... Most striking is the timing: this prophecy points to a Messiah being "cut off" before the destruction of the Second Temple, which fell in AD 70 — meaning the Messiah had to come before then.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ EMMAUS BENEDICTION ============ -->
+  <div class="benediction">
+    <div class="benediction-label">A Closing Blessing · The Road to Emmaus</div>
+    <h3>"Did not our hearts burn within us?"</h3>
+
+    <p>On the evening Jesus rose, two of his followers walked the road to Emmaus, heartbroken and confused. A stranger joined them. They didn't recognize him. And then — as Luke tells it — he did the very thing this whole study has tried to do.</p>
+
+    <div class="benediction-verse">
+      <div class="verse-ref">Luke 24:27, 31–32</div>
+      <div class="benediction-verse-text">And beginning with Moses and all the Prophets, he explained to them what was said in all the Scriptures concerning himself... Then their eyes were opened and they recognized him... They asked each other, "Were not our hearts burning within us while he talked with us on the road and opened the Scriptures to us?"</div>
+    </div>
+
+    <p>That's the hope behind this study. Not to argue you into a conclusion, but to lay the older Scriptures open and let them speak. If Jesus is who Christians say he is, then Moses, the Psalms, and the Prophets were already telling his story long before he arrived — and reading them carefully should be its own kind of evidence.</p>
+
+    <div class="benediction-flame">✦ &nbsp; ✦ &nbsp; ✦</div>
+
+    <p class="prayer">May the same God who opened their eyes on that road open yours.<br>May the Scriptures speak to you with their own voice.<br>And may your heart, like theirs, burn with the joy of seeing him.</p>
+  </div>
+
+  <!-- ============ CLOSING ============ -->
+  <div class="closing">
+    <div class="closing-mark">✦ ✦ ✦</div>
+    <p>This sheet is just a doorway — read each Hebrew passage on its own, in its own context, before reading the New Testament account. Let the older book speak first.</p>
+    <p>Whatever you conclude, the questions themselves are worth your time. Few things are more precious than a friend who will sit with you in them.</p>
+    <p class="signature">— a study companion, given in friendship —</p>
+  </div>
+
+  <!-- ============ COMPANION STUDY LINK ============ -->
+  <a href="testing_the_spirits.html" class="companion">
+    <div class="companion-inner">
+      <div class="companion-content">
+        <div class="companion-eyebrow">Continue · Part Two</div>
+        <div class="companion-title">Testing the Spirits</div>
+        <div class="companion-desc">A companion sheet on the criteria Scripture itself gives for weighing prophets, teachings, and spiritual experiences — including those that seem most convincing.</div>
+      </div>
+      <div class="companion-arrow">→</div>
+    </div>
+  </a>
+
+</div>
+
+<script>
+  // Auto-convert all scripture references into BibleGateway ESV links.
+  (function() {
+    var BASE = 'https://www.biblegateway.com/passage/?version=ESV&search=';
+
+    function buildUrl(refText, contextBook) {
+      // Strip surrounding punctuation/whitespace
+      var clean = refText.trim().replace(/^[\(\[]+|[\)\]\.,;:]+$/g, '').trim();
+      // Normalize en-dash and em-dash to hyphen for safer URL parsing
+      clean = clean.replace(/[–—]/g, '-');
+      // Strip a leading "v." or "vv." (e.g. "v.7"). For "v.7" inside Psalm 22, build "Psalm 22:7".
+      var verseOnlyMatch = clean.match(/^v{1,2}\.?\s*([\d\-,]+)$/i);
+      if (verseOnlyMatch && contextBook) {
+        clean = contextBook + ':' + verseOnlyMatch[1];
+      }
+      // Strip a leading "chapter:verse" with no book (e.g. "53:3") and prepend context book
+      var chapVerseOnly = clean.match(/^(\d+:[\d\-,]+)$/);
+      if (chapVerseOnly && contextBook) {
+        clean = contextBook + ' ' + chapVerseOnly[1];
+      }
+      return BASE + encodeURIComponent(clean);
+    }
+
+    // Each section's bare verse refs need a context book
+    var contextMap = {
+      'i.': null,           // Abraham & Isaac
+      'ii.': null,          // Joseph
+      'iii.': null,         // Passover
+      'iv.': null,          // Bronze Serpent
+      'v.': 'Psalm 22',     // Psalm 22 — uses "v.1", "v.7" etc.
+      'vi.': 'Isaiah',      // Isaiah 53 — uses "53:3", "53:5" etc.
+      'vii.': null
+    };
+
+    // Find each type-card and link refs using its context
+    document.querySelectorAll('.type-card').forEach(function(card) {
+      var num = card.querySelector('.type-number');
+      var key = num ? num.textContent.trim() : null;
+      var ctx = contextMap[key] || null;
+
+      card.querySelectorAll('.ref').forEach(function(el) {
+        if (el.tagName === 'A') return;
+        var a = document.createElement('a');
+        a.href = buildUrl(el.textContent, ctx);
+        a.target = '_blank';
+        a.rel = 'noopener noreferrer';
+        a.className = 'ref';
+        a.innerHTML = el.innerHTML;
+        el.parentNode.replaceChild(a, el);
+      });
+    });
+
+    // Convert any remaining .ref spans (outside type-cards)
+    document.querySelectorAll('.ref').forEach(function(el) {
+      if (el.tagName === 'A') return;
+      var a = document.createElement('a');
+      a.href = buildUrl(el.textContent, null);
+      a.target = '_blank';
+      a.rel = 'noopener noreferrer';
+      a.className = 'ref';
+      a.innerHTML = el.innerHTML;
+      el.parentNode.replaceChild(a, el);
+    });
+
+    // Convert each big .verse-ref header into a link too
+    document.querySelectorAll('.verse-ref').forEach(function(el) {
+      var ref = el.textContent.split('—')[0].trim(); // drop "— c. 1000 BC" etc.
+      var a = document.createElement('a');
+      a.href = buildUrl(ref, null);
+      a.target = '_blank';
+      a.rel = 'noopener noreferrer';
+      a.className = 'verse-ref-link';
+      el.parentNode.insertBefore(a, el);
+      a.appendChild(el);
+    });
+  })();
+</script>
+</body>
+</html>
