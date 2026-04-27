@@ -194,15 +194,25 @@
 
   .verse-ref {
     font-family: 'Spectral', serif;
-    font-weight: 600;
-    font-size: 1.05rem;
-    letter-spacing: 0.08em;
+    font-weight: 700;
+    font-size: 1.15rem;
+    letter-spacing: 0.04em;
     color: var(--crimson);
-    margin-bottom: 12px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid var(--rule);
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--rule);
     display: inline-block;
     text-transform: none;
+  }
+
+  .verse-ref::after {
+    content: ' ↗';
+    font-size: 0.75em;
+    color: var(--gold);
+    margin-left: 4px;
+    font-weight: 400;
+    transition: color 0.15s, transform 0.15s;
+    display: inline-block;
   }
 
   .verse-text {
@@ -253,11 +263,36 @@
   }
 
   .type-ref {
-    font-family: 'Lora', serif;
-    font-style: italic;
-    color: var(--ink-faded);
-    font-size: 1rem;
+    font-family: 'Spectral', serif;
+    font-weight: 600;
+    font-style: normal;
+    color: var(--crimson);
+    font-size: 1.1rem;
     margin-left: auto;
+    padding: 6px 14px;
+    background: rgba(122, 46, 46, 0.06);
+    border: 1px solid rgba(122, 46, 46, 0.2);
+    border-radius: 2px;
+    text-decoration: none;
+    transition: all 0.15s;
+    letter-spacing: 0.02em;
+  }
+
+  a.type-ref::after {
+    content: ' ↗';
+    font-size: 0.8em;
+    color: var(--gold);
+    margin-left: 2px;
+  }
+
+  a.type-ref:hover {
+    background: var(--crimson);
+    color: var(--parchment-light);
+    border-color: var(--crimson);
+  }
+
+  a.type-ref:hover::after {
+    color: var(--parchment-light);
   }
 
   .parallel-grid {
@@ -348,6 +383,11 @@
   a.verse-ref-link:hover .verse-ref {
     color: var(--gold-deep);
     border-bottom-color: var(--gold);
+  }
+
+  a.verse-ref-link:hover .verse-ref::after {
+    color: var(--crimson);
+    transform: translate(2px, -2px);
   }
 
   .key-verse {
@@ -1153,6 +1193,25 @@
       a.className = 'verse-ref-link';
       el.parentNode.insertBefore(a, el);
       a.appendChild(el);
+    });
+
+    // Convert each section .type-ref into a link to BibleGateway.
+    // For multi-reference cases (separated by ·), link to the first reference.
+    // Strip parenthetical dates like "(c. 1000 BC)".
+    document.querySelectorAll('.type-ref').forEach(function(el) {
+      if (el.tagName === 'A') return;
+      var raw = el.textContent.trim();
+      // Strip parenthetical content
+      var stripped = raw.replace(/\s*\([^)]*\)/g, '').trim();
+      // Take only the first reference if multiple
+      var firstRef = stripped.split(/\s*·\s*/)[0].trim();
+      var a = document.createElement('a');
+      a.href = buildUrl(firstRef, null);
+      a.target = '_blank';
+      a.rel = 'noopener noreferrer';
+      a.className = 'type-ref';
+      a.innerHTML = el.innerHTML;
+      el.parentNode.replaceChild(a, el);
     });
   })();
 </script>

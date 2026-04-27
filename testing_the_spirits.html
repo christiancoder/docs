@@ -193,15 +193,25 @@
 
   .verse-ref {
     font-family: 'Spectral', serif;
-    font-weight: 600;
-    font-size: 1.05rem;
-    letter-spacing: 0.08em;
+    font-weight: 700;
+    font-size: 1.15rem;
+    letter-spacing: 0.04em;
     color: var(--crimson);
-    margin-bottom: 12px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid var(--rule);
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--rule);
     display: inline-block;
     text-transform: none;
+  }
+
+  .verse-ref::after {
+    content: ' ↗';
+    font-size: 0.75em;
+    color: var(--gold);
+    margin-left: 4px;
+    font-weight: 400;
+    transition: color 0.15s, transform 0.15s;
+    display: inline-block;
   }
 
   .verse-text {
@@ -287,6 +297,11 @@
   a.verse-ref-link:hover .verse-ref {
     color: var(--gold-deep);
     border-bottom-color: var(--gold);
+  }
+
+  a.verse-ref-link:hover .verse-ref::after {
+    color: var(--crimson);
+    transform: translate(2px, -2px);
   }
 
   .key-verse {
