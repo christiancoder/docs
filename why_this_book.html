@@ -1,0 +1,1145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>One Story, Many Voices — A Quiet Study</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Spectral:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #2a1f17;
+    --ink-soft: #4a3a2c;
+    --ink-faded: #6b5a48;
+    --parchment: #f5ede0;
+    --parchment-deep: #ebdfc9;
+    --parchment-light: #faf5ea;
+    --gold: #9a7a3c;
+    --gold-deep: #6b5320;
+    --crimson: #7a2e2e;
+    --rule: #c9b896;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--parchment);
+    background-image:
+      radial-gradient(ellipse at top left, rgba(154, 122, 60, 0.08), transparent 60%),
+      radial-gradient(ellipse at bottom right, rgba(122, 46, 46, 0.05), transparent 60%);
+    color: var(--ink);
+    font-family: 'Lora', Georgia, serif;
+    font-size: 18px;
+    line-height: 1.7;
+    padding: 60px 30px;
+    min-height: 100vh;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0.4 0 0 0 0 0.3 0 0 0 0 0.2 0 0 0 0.08 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity: 0.6;
+    mix-blend-mode: multiply;
+    z-index: 1;
+  }
+
+  .container {
+    max-width: 920px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* ====== Companion link ====== */
+  .companion {
+    margin: 0 0 50px;
+    padding: 0;
+    background: var(--parchment-light);
+    border: 1px solid var(--rule);
+    border-top: 3px solid var(--gold);
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    transition: transform 0.2s, box-shadow 0.2s, border-top-color 0.2s;
+  }
+
+  .companion:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(42, 31, 23, 0.12);
+    border-top-color: var(--crimson);
+  }
+
+  .companion-inner {
+    padding: 30px 40px;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 28px;
+    align-items: center;
+  }
+
+  .companion-inner.forward {
+    grid-template-columns: 1fr auto;
+  }
+
+  .companion-content { min-width: 0; }
+
+  .companion-eyebrow {
+    font-family: 'Spectral', serif;
+    font-size: 10px;
+    letter-spacing: 0.45em;
+    color: var(--gold-deep);
+    margin-bottom: 8px;
+    text-transform: uppercase;
+  }
+
+  .companion-title {
+    font-family: 'Spectral', serif;
+    font-style: italic;
+    font-weight: 500;
+    font-size: clamp(1.3rem, 2.4vw, 1.7rem);
+    color: var(--ink);
+    line-height: 1.15;
+  }
+
+  .companion-arrow {
+    font-family: 'Spectral', serif;
+    font-size: 2.2rem;
+    color: var(--gold);
+    font-weight: 300;
+    line-height: 1;
+    transition: transform 0.2s, color 0.2s;
+    flex-shrink: 0;
+  }
+
+  .companion.back .companion-arrow { order: -1; }
+  .companion.back:hover .companion-arrow {
+    transform: translateX(-6px);
+    color: var(--crimson);
+  }
+  .companion.forward:hover .companion-arrow {
+    transform: translateX(6px);
+    color: var(--crimson);
+  }
+
+  /* ====== Masthead ====== */
+  .masthead {
+    text-align: center;
+    padding: 30px 0 50px;
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 60px;
+    position: relative;
+  }
+
+  .masthead::after {
+    content: '✦';
+    position: absolute;
+    bottom: -14px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--parchment);
+    padding: 0 16px;
+    color: var(--gold);
+    font-size: 18px;
+  }
+
+  .eyebrow {
+    font-family: 'Spectral', serif;
+    letter-spacing: 0.45em;
+    font-size: 11px;
+    color: var(--gold-deep);
+    margin-bottom: 24px;
+    text-transform: uppercase;
+  }
+
+  h1.title {
+    font-family: 'Spectral', serif;
+    font-weight: 500;
+    font-size: clamp(2.8rem, 6vw, 4.5rem);
+    line-height: 1.05;
+    color: var(--ink);
+    margin-bottom: 18px;
+    font-style: italic;
+  }
+
+  h1.title .ornament {
+    display: block;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 0.45em;
+    color: var(--gold-deep);
+    letter-spacing: 0.3em;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+  }
+
+  .subtitle {
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 1.15rem;
+    color: var(--ink-soft);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  /* ====== Friend's Note ====== */
+  .friend-note {
+    background: linear-gradient(135deg, rgba(154, 122, 60, 0.06), rgba(122, 46, 46, 0.04));
+    border-left: 3px solid var(--gold);
+    padding: 28px 36px;
+    margin-bottom: 60px;
+    font-style: italic;
+    color: var(--ink-soft);
+    position: relative;
+  }
+
+  .friend-note::before {
+    content: '"';
+    position: absolute;
+    top: -10px;
+    left: 18px;
+    font-family: 'Spectral', serif;
+    font-size: 80px;
+    color: var(--gold);
+    opacity: 0.3;
+    line-height: 1;
+  }
+
+  .friend-note p { margin-bottom: 10px; }
+  .friend-note p:last-child { margin-bottom: 0; }
+
+  /* ====== Sections ====== */
+  section {
+    margin-bottom: 70px;
+  }
+
+  .section-num {
+    font-family: 'Spectral', serif;
+    font-size: 11px;
+    letter-spacing: 0.4em;
+    color: var(--gold-deep);
+    margin-bottom: 12px;
+  }
+
+  h2 {
+    font-family: 'Spectral', serif;
+    font-weight: 500;
+    font-size: clamp(1.9rem, 3.5vw, 2.6rem);
+    color: var(--ink);
+    line-height: 1.15;
+    margin-bottom: 8px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--rule);
+    position: relative;
+  }
+
+  h2 .accent {
+    font-style: italic;
+    color: var(--crimson);
+  }
+
+  .lede {
+    font-family: 'Lora', serif;
+    font-size: 1.1rem;
+    color: var(--ink-soft);
+    margin-top: 18px;
+    margin-bottom: 28px;
+    max-width: 720px;
+    font-style: italic;
+  }
+
+  p { margin-bottom: 16px; }
+  p:last-child { margin-bottom: 0; }
+
+  /* Drop cap */
+  .with-dropcap::first-letter {
+    font-family: 'Spectral', serif;
+    font-size: 4rem;
+    font-weight: 500;
+    float: left;
+    line-height: 0.85;
+    padding: 4px 8px 0 0;
+    color: var(--crimson);
+    font-style: italic;
+  }
+
+  /* ====== Two-religions comparison ====== */
+  .compare {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    margin: 28px 0;
+    border: 1px solid var(--rule);
+    background: var(--parchment-light);
+  }
+
+  .compare-col {
+    padding: 28px 30px;
+  }
+
+  .compare-col:first-child {
+    border-right: 1px solid var(--rule);
+    background: rgba(154, 122, 60, 0.04);
+  }
+
+  .compare-label {
+    font-family: 'Spectral', serif;
+    font-size: 10px;
+    letter-spacing: 0.4em;
+    color: var(--gold-deep);
+    margin-bottom: 12px;
+    text-transform: uppercase;
+  }
+
+  .compare-headline {
+    font-family: 'Spectral', serif;
+    font-style: italic;
+    font-weight: 500;
+    font-size: 1.3rem;
+    color: var(--ink);
+    margin-bottom: 14px;
+    line-height: 1.2;
+  }
+
+  .compare-col p {
+    font-size: 1rem;
+    color: var(--ink-soft);
+    line-height: 1.6;
+    margin-bottom: 12px;
+  }
+
+  /* ====== Stat card ====== */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 18px;
+    margin: 24px 0;
+  }
+
+  .stat {
+    background: var(--parchment-light);
+    border: 1px solid var(--rule);
+    padding: 22px 22px;
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: 'Spectral', serif;
+    font-style: italic;
+    font-weight: 600;
+    font-size: 2.4rem;
+    color: var(--crimson);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .stat-label {
+    font-family: 'Spectral', serif;
+    font-size: 10px;
+    letter-spacing: 0.35em;
+    color: var(--gold-deep);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .stat-desc {
+    font-size: 0.94rem;
+    color: var(--ink-soft);
+    line-height: 1.55;
+  }
+
+  /* ====== Manuscript comparison table ====== */
+  .ms-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 24px 0;
+    background: var(--parchment-light);
+    border: 1px solid var(--rule);
+    font-family: 'Lora', serif;
+  }
+
+  .ms-table th {
+    font-family: 'Spectral', serif;
+    font-size: 10px;
+    letter-spacing: 0.35em;
+    color: var(--gold-deep);
+    text-transform: uppercase;
+    text-align: left;
+    padding: 14px 18px;
+    background: rgba(154, 122, 60, 0.08);
+    border-bottom: 1px solid var(--rule);
+    font-weight: 600;
+  }
+
+  .ms-table td {
+    padding: 12px 18px;
+    border-bottom: 1px solid rgba(201, 184, 150, 0.4);
+    font-size: 0.98rem;
+  }
+
+  .ms-table tr:last-child td {
+    border-bottom: none;
+  }
+
+  .ms-table tr.highlight td {
+    background: rgba(122, 46, 46, 0.05);
+    font-weight: 500;
+    color: var(--ink);
+  }
+
+  .ms-table .work {
+    font-style: italic;
+    color: var(--ink);
+  }
+
+  .ms-table .num {
+    font-family: 'Spectral', serif;
+    font-weight: 600;
+    color: var(--crimson);
+  }
+
+  /* ====== Topic card ====== */
+  .topic {
+    margin-bottom: 40px;
+    padding-bottom: 40px;
+    border-bottom: 1px dashed var(--rule);
+  }
+
+  .topic:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+    margin-bottom: 0;
+  }
+
+  .topic-header {
+    display: flex;
+    align-items: baseline;
+    gap: 18px;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+  }
+
+  .topic-number {
+    font-family: 'Spectral', serif;
+    font-size: 2.6rem;
+    font-weight: 300;
+    color: var(--gold);
+    line-height: 1;
+    font-style: italic;
+  }
+
+  .topic-title {
+    font-family: 'Spectral', serif;
+    font-size: 1.6rem;
+    font-weight: 500;
+    color: var(--ink);
+    line-height: 1.2;
+  }
+
+  /* ====== Verse / quote callout ====== */
+  .verse {
+    background: var(--parchment-light);
+    border: 1px solid var(--rule);
+    padding: 22px 26px;
+    margin: 18px 0;
+  }
+
+  .verse-ref {
+    font-family: 'Spectral', serif;
+    font-weight: 700;
+    font-size: 1.15rem;
+    letter-spacing: 0.04em;
+    color: var(--crimson);
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--rule);
+    display: inline-block;
+  }
+
+  .verse-ref::after {
+    content: ' ↗';
+    font-size: 0.75em;
+    color: var(--gold);
+    margin-left: 4px;
+    font-weight: 400;
+    transition: color 0.15s, transform 0.15s;
+    display: inline-block;
+  }
+
+  a.verse-ref-link {
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  a.verse-ref-link:hover .verse-ref {
+    color: var(--gold-deep);
+    border-bottom-color: var(--gold);
+  }
+
+  a.verse-ref-link:hover .verse-ref::after {
+    color: var(--crimson);
+    transform: translate(2px, -2px);
+  }
+
+  .verse-text {
+    font-family: 'Lora', serif;
+    font-size: 1.1rem;
+    color: var(--ink);
+    line-height: 1.65;
+    font-style: italic;
+  }
+
+  .verse-text::before { content: '"'; }
+  .verse-text::after { content: '"'; }
+
+  /* Inline scripture references */
+  .ref, a.ref {
+    font-family: 'Spectral', serif;
+    font-weight: 600;
+    color: var(--crimson);
+    font-style: normal;
+    white-space: nowrap;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    border-bottom: 1px dotted rgba(122, 46, 46, 0.4);
+    transition: color 0.15s, border-color 0.15s, background 0.15s;
+  }
+
+  a.ref:hover {
+    color: var(--gold-deep);
+    border-bottom-color: var(--gold);
+    background: rgba(154, 122, 60, 0.08);
+  }
+
+  a.ref:visited { color: var(--crimson); }
+
+  /* Key-insight callout */
+  .key-verse {
+    margin-top: 18px;
+    padding: 16px 22px;
+    background: rgba(122, 46, 46, 0.04);
+    border-left: 2px solid var(--crimson);
+    font-style: italic;
+    color: var(--ink-soft);
+    font-size: 0.98rem;
+  }
+
+  .key-verse strong {
+    font-style: normal;
+    font-family: 'Spectral', serif;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    color: var(--crimson);
+    display: block;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  /* Pull quote */
+  .pullquote {
+    margin: 28px 40px;
+    padding: 24px 0;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    text-align: center;
+    font-family: 'Spectral', serif;
+    font-style: italic;
+    font-size: 1.4rem;
+    line-height: 1.4;
+    color: var(--ink);
+  }
+
+  .pullquote-source {
+    display: block;
+    font-family: 'Spectral', serif;
+    font-style: normal;
+    font-size: 11px;
+    letter-spacing: 0.35em;
+    color: var(--gold-deep);
+    text-transform: uppercase;
+    margin-top: 14px;
+  }
+
+  /* Timeline of authors */
+  .timeline {
+    background: var(--parchment-light);
+    border: 1px solid var(--rule);
+    padding: 28px 32px;
+    margin: 24px 0;
+  }
+
+  .timeline-item {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 20px;
+    padding: 12px 0;
+    border-bottom: 1px dotted rgba(154, 122, 60, 0.3);
+  }
+
+  .timeline-item:last-child { border-bottom: none; }
+
+  .timeline-when {
+    font-family: 'Spectral', serif;
+    font-weight: 600;
+    color: var(--crimson);
+    font-size: 0.95rem;
+    letter-spacing: 0.03em;
+  }
+
+  .timeline-what {
+    font-size: 0.98rem;
+    color: var(--ink);
+    line-height: 1.55;
+  }
+
+  .timeline-what em {
+    color: var(--ink-soft);
+  }
+
+  /* Closing benediction */
+  .benediction {
+    margin-top: 60px;
+    padding: 50px 40px;
+    background:
+      linear-gradient(135deg, rgba(122, 46, 46, 0.06), rgba(154, 122, 60, 0.08)),
+      var(--parchment-light);
+    border: 1px solid var(--rule);
+    border-top: 3px double var(--gold);
+    border-bottom: 3px double var(--gold);
+    text-align: center;
+    position: relative;
+  }
+
+  .benediction-label {
+    font-family: 'Spectral', serif;
+    font-size: 11px;
+    letter-spacing: 0.45em;
+    color: var(--gold-deep);
+    margin-bottom: 18px;
+    text-transform: uppercase;
+  }
+
+  .benediction h3 {
+    font-family: 'Spectral', serif;
+    font-style: italic;
+    font-weight: 500;
+    font-size: clamp(1.7rem, 3vw, 2.3rem);
+    color: var(--ink);
+    margin-bottom: 28px;
+    line-height: 1.2;
+  }
+
+  .benediction-verse {
+    background: rgba(255, 255, 255, 0.4);
+    border-left: 2px solid var(--crimson);
+    padding: 22px 28px;
+    margin: 0 auto 28px;
+    max-width: 640px;
+    text-align: left;
+  }
+
+  .benediction-verse-text {
+    font-style: italic;
+    font-size: 1.08rem;
+    line-height: 1.65;
+    color: var(--ink);
+  }
+
+  .benediction p {
+    font-family: 'Lora', serif;
+    font-size: 1.08rem;
+    line-height: 1.7;
+    color: var(--ink-soft);
+    max-width: 640px;
+    margin: 0 auto 18px;
+    font-style: italic;
+  }
+
+  .benediction p.prayer {
+    font-style: normal;
+    color: var(--ink);
+    font-size: 1.12rem;
+    margin-top: 30px;
+    padding-top: 30px;
+    border-top: 1px solid var(--rule);
+  }
+
+  .benediction-flame {
+    font-size: 28px;
+    color: var(--crimson);
+    margin: 20px 0;
+    letter-spacing: 0.3em;
+  }
+
+  /* Closing */
+  .closing {
+    text-align: center;
+    padding: 50px 20px;
+    border-top: 1px solid var(--rule);
+    margin-top: 40px;
+  }
+
+  .closing-mark {
+    font-family: 'Spectral', serif;
+    font-size: 24px;
+    color: var(--gold);
+    margin-bottom: 20px;
+    letter-spacing: 0.4em;
+  }
+
+  .closing p {
+    font-style: italic;
+    color: var(--ink-soft);
+    max-width: 600px;
+    margin: 0 auto 12px;
+    font-size: 1.05rem;
+  }
+
+  .closing .signature {
+    font-family: 'Spectral', serif;
+    color: var(--ink-faded);
+    font-size: 0.95rem;
+    margin-top: 24px;
+    letter-spacing: 0.1em;
+  }
+
+  /* Mobile */
+  @media (max-width: 700px) {
+    body { padding: 30px 18px; font-size: 16px; }
+    .friend-note { padding: 22px 22px 22px 26px; }
+    .compare { grid-template-columns: 1fr; }
+    .compare-col:first-child {
+      border-right: none;
+      border-bottom: 1px solid var(--rule);
+    }
+    .ms-table { font-size: 0.88rem; }
+    .ms-table th, .ms-table td { padding: 10px 12px; }
+    .timeline-item {
+      grid-template-columns: 1fr;
+      gap: 4px;
+    }
+    .pullquote { margin: 24px 0; font-size: 1.15rem; }
+    .companion-inner {
+      grid-template-columns: 1fr;
+      gap: 12px;
+      padding: 22px 24px;
+    }
+    .companion-arrow { font-size: 1.8rem; }
+  }
+
+  @media print {
+    body { background: white; padding: 20px; }
+    body::before { display: none; }
+    .verse, .topic, .ms-table, .stats, .compare { break-inside: avoid; }
+    section { break-inside: avoid; }
+    .companion { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- ============ BACK NAV ============ -->
+  <a href="testing_the_spirits.html" class="companion back">
+    <div class="companion-inner">
+      <div class="companion-arrow">←</div>
+      <div class="companion-content">
+        <div class="companion-eyebrow">Return · Part Two</div>
+        <div class="companion-title">Testing the Spirits</div>
+      </div>
+    </div>
+  </a>
+
+  <!-- ============ MASTHEAD ============ -->
+  <header class="masthead">
+    <div class="eyebrow">A Quiet Study · For a Friend</div>
+    <h1 class="title">
+      <span class="ornament">~ One Story, Many Voices ~</span>
+      Why <em>this</em> Book?
+    </h1>
+    <p class="subtitle">A reference companion — what makes the Bible's claim genuinely unique among the world's religious texts, and why the manuscripts behind it are unusually trustworthy.</p>
+  </header>
+
+  <!-- ============ FRIEND'S NOTE ============ -->
+  <div class="friend-note">
+    <p>Of all the questions that come up between us, this one might be the most decisive: <em>why trust the Bible at all?</em> If the text isn't reliable — or if its message isn't actually distinct from what other religions teach — then nothing in the first two studies matters very much.</p>
+    <p>So this sheet steps back. It looks at what the Bible <em>is</em> as a book — how it came to us, what it claims that no other scripture claims, and why the historical evidence for its text is, by any honest measure, the strongest in the ancient world. Read it carefully and skeptically. Then go look the claims up.</p>
+  </div>
+
+  <!-- ============ SECTION 1: TWO RELIGIONS ============ -->
+  <section>
+    <div class="section-num">I · The Two Religions</div>
+    <h2>What Christianity <span class="accent">uniquely</span> claims</h2>
+    <p class="lede with-dropcap">Strip the world's religions down to their core moral architecture and a striking pattern emerges. Almost every system, however different in details, places the burden of righteousness on the worshipper. Pray more. Fast more. Give more. Be more. The path to God runs through your own moral effort, your own merit. Christianity alone makes a different claim — and it is precisely this claim that the first two studies were about.</p>
+
+    <div class="compare">
+      <div class="compare-col">
+        <div class="compare-label">The Common Pattern</div>
+        <div class="compare-headline">Salvation through merit</div>
+        <p>You are accepted by God if your good outweighs your bad — measured by deeds, by ritual fidelity, by submission, by enlightenment, by purity, by knowledge.</p>
+        <p>Mercy may soften the scales, but the scales remain. The arrow of motion points from <em>you</em> upward, toward a God who waits to see what you'll do.</p>
+        <p>This is the pattern in every major world religion to varying degrees — and, it must be said, in much of what passes for Christianity in practice. It is the natural human assumption.</p>
+      </div>
+      <div class="compare-col">
+        <div class="compare-label">The Christian Claim</div>
+        <div class="compare-headline">Salvation through the merit of Another</div>
+        <p>The Bible's claim is that no human, including the most devout, has scales that balance — and that God knew this from the beginning.</p>
+        <p>So God himself bears the cost. The righteousness required is supplied <em>to</em> the worshipper, not extracted <em>from</em> them. The arrow points from God downward, toward people who could not climb.</p>
+        <p>This is what Christians mean by <em>grace</em> and <em>the gospel</em>. It is not "be good enough." It is "you cannot be good enough — and that is why Christ came."</p>
+      </div>
+    </div>
+
+    <div class="verse">
+      <div class="verse-ref">Ephesians 2:8–9</div>
+      <div class="verse-text">For by grace you have been saved through faith. And this is not your own doing; it is the gift of God, not a result of works, so that no one may boast.</div>
+    </div>
+
+    <div class="verse">
+      <div class="verse-ref">Romans 5:8</div>
+      <div class="verse-text">God shows his love for us in that while we were still sinners, Christ died for us.</div>
+    </div>
+
+    <div class="verse">
+      <div class="verse-ref">Titus 3:5</div>
+      <div class="verse-text">He saved us, not because of works done by us in righteousness, but according to his own mercy.</div>
+    </div>
+
+    <div class="key-verse">
+      <strong>The honest framing</strong>
+      Other religions have rich vocabularies of mercy too — that's not in dispute. The genuinely unique claim of Christianity is sharper: that <em>God himself, in the person of his Son, paid the cost of righteousness on the worshipper's behalf.</em> Not that God is merciful and forgives those who try hard. That God came down, lived the perfect life we couldn't, died the death we deserved, and credits his own righteousness to anyone who trusts him. No other major faith makes this claim. It is either the most extraordinary news in history or the most extravagant fiction. It cannot be domesticated into "all religions teach the same thing."
+    </div>
+  </section>
+
+  <!-- ============ SECTION 2: ONE STORY MANY VOICES ============ -->
+  <section>
+    <div class="section-num">II · One Story, Many Voices</div>
+    <h2>A library written across <span class="accent">a millennium and a half</span></h2>
+    <p class="lede">Most of the world's sacred texts were composed by a single person, in a single lifetime, in a single language. The Bible is something else entirely — a library of 66 books, written by some 40 authors, in three languages, on three continents, across roughly 1,500 years. And somehow, against every expectation, it tells one continuous story.</p>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-when">c. 1400 BC</div>
+        <div class="timeline-what"><strong>Moses</strong> writes the Torah while leading nomadic Hebrews in the Sinai. <em>A shepherd-prince trained in the courts of Egypt.</em></div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-when">c. 1000 BC</div>
+        <div class="timeline-what"><strong>David</strong> writes Psalms as a shepherd-king in Jerusalem, six centuries later. <em>A warrior poet.</em></div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-when">c. 700 BC</div>
+        <div class="timeline-what"><strong>Isaiah</strong> prophesies during the Assyrian crisis. <em>A nobleman in the royal court.</em></div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-when">c. 600 BC</div>
+        <div class="timeline-what"><strong>Daniel</strong> writes from exile in Babylon. <em>A captive serving foreign kings.</em></div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-when">c. 450 BC</div>
+        <div class="timeline-what"><strong>Malachi</strong> closes the Hebrew Scriptures. <em>A post-exile prophet in a small, restored Judah.</em></div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-when">— a 400-year silence —</div>
+        <div class="timeline-what">No prophetic writing. The story pauses for four centuries.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-when">c. AD 50–95</div>
+        <div class="timeline-what"><strong>Matthew, Mark, Luke, John, Paul, Peter, James, Jude, John</strong> — fishermen, a tax collector, a physician, a tentmaker rabbi — write the New Testament under Roman occupation, scattered across the Mediterranean. <em>The story resumes and concludes.</em></div>
+      </div>
+    </div>
+
+    <p>These are not collaborators. The earliest writers could not have read the later ones — Moses could not have read Isaiah; Isaiah could not have read Paul. They wrote in Hebrew, Aramaic, and Greek, in palaces and prisons, on scrolls and skins, separated by oceans of time and circumstance. Later writers, of course, knew the books that came before — the Psalms quote the Torah; the Prophets quote both; the New Testament writers quote all of it constantly. But that is precisely the point of the puzzle: the later writers consciously continued a story whose earliest authors could not have known they were starting.</p>
+
+    <p>And yet — across all of it — a single, coherent story unfolds: a holy God; a fallen humanity; a promised redeemer; a substitutionary sacrifice; a defeated death; a renewed creation. The same themes, the same moral logic, the same trajectory. The pattern Genesis hints at in its third chapter is the pattern Revelation closes with on its last page. <span class="ref">(Gen 3:15)</span> meets <span class="ref">(Rev 22:1–5)</span> across a millennium and a half.</p>
+
+    <div class="pullquote">
+      "Imagine assembling 40 authors over 1,500 years on three continents, writing in three languages, and asking them to compose a coherent account of the meaning of life. Then imagine the result actually <em>being</em> coherent."
+      <span class="pullquote-source">A modern way to put the puzzle</span>
+    </div>
+
+    <p>The unity isn't superficial — it's structural. Later writers refer to earlier ones with breathtaking precision; prophecies made centuries before Jesus describe his death with details (his pierced hands and feet, his garments divided by lot, his burial with the rich) that the writers themselves could not have engineered. The <em>first study</em> traces some of these — Abraham, Joseph, Passover, Isaiah 53. None of those authors knew they were writing about Jesus. But every Christian reader since has said: <em>they were.</em></p>
+
+    <div class="key-verse">
+      <strong>The claim implicit in the structure</strong>
+      A book with this kind of unity demands an explanation. Either 40 separated authors happened, by extraordinary coincidence, to converge on the same redemptive story — or one Author was working through all of them. The Bible itself claims the second: <span class="ref">(2 Tim 3:16)</span>, <span class="ref">(2 Pet 1:21)</span>. The text invites the reader to weigh the evidence and decide.
+    </div>
+  </section>
+
+  <!-- ============ SECTION 3: TEXT RELIABILITY ============ -->
+  <section>
+    <div class="section-num">III · The Text Itself</div>
+    <h2>How well do we know <span class="accent">what they wrote?</span></h2>
+    <p class="lede">A separate question from "is the Bible's message true" is "do we even have what they originally wrote?" If the text was corrupted across the centuries, the rest collapses. This is where many people first encounter the apologetic case for Christianity — and where, on the historical evidence, the case is unusually strong.</p>
+
+    <!-- TOPIC 1: MANUSCRIPT COUNT -->
+    <div class="topic">
+      <div class="topic-header">
+        <div class="topic-number">i.</div>
+        <div class="topic-title">Manuscript evidence — far beyond any other ancient work</div>
+      </div>
+
+      <p>For ancient texts, historians measure reliability partly by two things: how many manuscript copies survive, and how close the earliest copies are to the original. By both measures, the New Testament stands in a category by itself.</p>
+
+      <table class="ms-table">
+        <thead>
+          <tr>
+            <th>Work</th>
+            <th>Earliest copy</th>
+            <th>Gap from original</th>
+            <th>Surviving manuscripts</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="work">Caesar's <em>Gallic Wars</em></td>
+            <td>c. AD 900</td>
+            <td><span class="num">~950 yrs</span></td>
+            <td><span class="num">~10</span></td>
+          </tr>
+          <tr>
+            <td class="work">Tacitus' <em>Annals</em></td>
+            <td>c. AD 1100</td>
+            <td><span class="num">~1,000 yrs</span></td>
+            <td><span class="num">~20</span></td>
+          </tr>
+          <tr>
+            <td class="work">Plato's <em>Tetralogies</em></td>
+            <td>c. AD 900</td>
+            <td><span class="num">~1,200 yrs</span></td>
+            <td><span class="num">~210</span></td>
+          </tr>
+          <tr>
+            <td class="work">Homer's <em>Iliad</em></td>
+            <td>c. 400 BC</td>
+            <td><span class="num">~400 yrs</span></td>
+            <td><span class="num">~1,800</span></td>
+          </tr>
+          <tr class="highlight">
+            <td class="work">The New Testament</td>
+            <td>c. AD 125 (fragment)</td>
+            <td><span class="num">~30–50 yrs</span></td>
+            <td><span class="num">~5,800 (Greek) + 20,000 in other languages</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>No serious classicist disputes that we have what Caesar and Tacitus wrote, despite gaps of nearly a thousand years and a handful of copies. The New Testament's evidence base is, by orders of magnitude, the best of any document from antiquity.</p>
+    </div>
+
+    <!-- TOPIC 2: EARLY DATING -->
+    <div class="topic">
+      <div class="topic-header">
+        <div class="topic-number">ii.</div>
+        <div class="topic-title">An astonishingly early creed</div>
+      </div>
+
+      <p>One of the most striking pieces of evidence isn't a manuscript at all — it's a creed Paul quotes inside one of his letters, which he says he <em>received</em> from earlier Christians. Most scholars across the spectrum, including skeptical ones, date this creed to within five years of the crucifixion itself.</p>
+
+      <div class="verse">
+        <div class="verse-ref">1 Corinthians 15:3–7</div>
+        <div class="verse-text">For I delivered to you as of first importance what I also received: that Christ died for our sins in accordance with the Scriptures, that he was buried, that he was raised on the third day in accordance with the Scriptures, and that he appeared to Cephas, then to the twelve. Then he appeared to more than five hundred brothers at one time, most of whom are still alive, though some have fallen asleep. Then he appeared to James, then to all the apostles.</div>
+      </div>
+
+      <div class="key-verse">
+        <strong>Why this matters</strong>
+        Paul wrote 1 Corinthians around AD 53–54. The creed he quotes uses early formulaic language and Aramaic substrate (Cephas instead of Peter), pointing to its origin in the Jerusalem church within a few years of Jesus' death. That means the resurrection claim — including named eyewitnesses, with a casual aside that <em>most are still alive</em> if anyone wants to ask them — is not a legend that grew over generations. It is the foundational claim of the movement, traceable to its earliest months. Legends do not form in five years among hostile witnesses living in the same city as the events.
+      </div>
+    </div>
+
+    <!-- TOPIC 3: DEAD SEA SCROLLS -->
+    <div class="topic">
+      <div class="topic-header">
+        <div class="topic-number">iii.</div>
+        <div class="topic-title">The Dead Sea Scrolls — a thousand-year reality check</div>
+      </div>
+
+      <p>Until 1947, the oldest complete Hebrew manuscript of Isaiah dated to around AD 1000. Skeptics could reasonably ask: how do we know the text wasn't changed across that gap?</p>
+
+      <p>Then a Bedouin shepherd boy threw a stone into a cave near Qumran and discovered jars of scrolls. Among them was a complete scroll of Isaiah, dated to roughly 125 BC — over a thousand years older than any previous copy.</p>
+
+      <p>When scholars compared the two texts, the result was extraordinary: the texts matched to a degree of more than 95% word-for-word, and the variations that did exist were almost entirely matters of spelling and obvious scribal slips — none affecting any teaching. Isaiah 53, the suffering servant chapter, reads in the 125 BC scroll exactly as it reads in modern Bibles.</p>
+
+      <div class="key-verse">
+        <strong>The verdict</strong>
+        The Hebrew scribes' obsessive textual care — counting letters, comparing copies, destroying any scroll with errors — wasn't wishful piety. It worked. The Dead Sea Scrolls demonstrated, by direct comparison across a thousand-year gap, that the Old Testament we read today is substantially what was read in the centuries before Christ. The same chapters Jesus quoted are the chapters in our Bibles.
+      </div>
+    </div>
+
+    <!-- TOPIC 4: COMPLETE EARLY MANUSCRIPTS -->
+    <div class="topic">
+      <div class="topic-header">
+        <div class="topic-number">iv.</div>
+        <div class="topic-title">Codex Sinaiticus &amp; the great early Bibles</div>
+      </div>
+
+      <p>Beyond fragments, there are complete or nearly complete Bibles surviving from the 4th century — a mere three hundred years after the New Testament was written, which is staggeringly close by ancient-text standards.</p>
+
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-num">c. AD 350</div>
+          <div class="stat-label">Codex Sinaiticus</div>
+          <div class="stat-desc">Discovered at St. Catherine's monastery in the Sinai. Contains the entire New Testament and most of the Old. Now digitized and freely viewable online.</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">c. AD 325</div>
+          <div class="stat-label">Codex Vaticanus</div>
+          <div class="stat-desc">Held in the Vatican Library since at least the 15th century. Nearly complete Bible, slightly older than Sinaiticus.</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">c. AD 125</div>
+          <div class="stat-label">P52 (John fragment)</div>
+          <div class="stat-desc">A fragment of the Gospel of John found in Egypt, dated to within a generation of the original — one of the earliest pieces of the New Testament that survives.</div>
+        </div>
+      </div>
+
+      <p>When you compare these fourth-century complete Bibles to modern translations, you find substantially the same text. The doctrines, the narratives, the words of Jesus — all there.</p>
+    </div>
+
+    <!-- TOPIC 5: VARIANTS -->
+    <div class="topic">
+      <div class="topic-header">
+        <div class="topic-number">v.</div>
+        <div class="topic-title">"But what about the variants?"</div>
+      </div>
+
+      <p>The most popular skeptical case against the Bible's reliability runs roughly like this: the New Testament has hundreds of thousands of textual variants across its manuscripts — therefore we can't know what the original said. This argument has reached wide audiences through scholars like Bart Ehrman, and it sounds devastating until examined.</p>
+
+      <p>Here is the honest accounting:</p>
+
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-num">~400,000</div>
+          <div class="stat-label">Total variants</div>
+          <div class="stat-desc">Across <em>all</em> ~5,800 Greek manuscripts. The number is large because the manuscripts are.</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">~99%</div>
+          <div class="stat-label">Trivial variants</div>
+          <div class="stat-desc">Spelling differences, word order, scribal slips, the Greek equivalent of <em>colour</em> vs <em>color</em>.</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">0</div>
+          <div class="stat-label">Doctrines in dispute</div>
+          <div class="stat-desc">No major Christian teaching depends on a contested passage. Even Ehrman concedes this.</div>
+        </div>
+      </div>
+
+      <p>The variant count is high <em>because</em> the manuscript tradition is unusually rich. With ten copies of a text, you get few variants; with six thousand, you get many — but the comparison itself is what enables scholars to reconstruct the original with high confidence. The same standard applied consistently would render virtually every ancient text unreadable. We have a handful of copies of Tacitus and zero one cares about reconstructing him from comparisons; we have thousands of New Testament copies and the variants are treated as scandal.</p>
+
+      <div class="key-verse">
+        <strong>The double standard</strong>
+        The skeptical argument applied to the New Testament — "we can't trust what we have because there are differences across copies" — would, if applied consistently, render every classical text in existence useless. No serious historian doubts what Caesar wrote in the <em>Gallic Wars</em>, despite a thousand-year gap and ten copies with their own variants. The New Testament has thirty-to-fifty years and thousands of copies. The objection is not historical; it is philosophical, and it has been answered carefully by scholars like Daniel Wallace, who has personally examined more New Testament manuscripts than perhaps anyone alive.
+      </div>
+    </div>
+
+    <!-- TOPIC 6: APPARENT CONTRADICTIONS -->
+    <div class="topic">
+      <div class="topic-header">
+        <div class="topic-number">vi.</div>
+        <div class="topic-title">"Apparent contradictions" — and what they actually show</div>
+      </div>
+
+      <p>The Gospels contain differences. Matthew says one angel at the empty tomb; John says two. Was the cock supposed to crow once or twice? Did the women come at dawn or while it was still dark? Skeptics treat these as proof of fabrication. But anyone trained in legal evidence or eyewitness testimony recognizes the opposite pattern.</p>
+
+      <p>When four witnesses to a car accident give <em>identical</em> reports — same words, same order, same details — a detective immediately suspects collusion. Real eyewitnesses describe the same event from different vantage points, with different things they noticed and different details they emphasized. They contradict each other on minor points and agree on the central facts. This is the signature of independent testimony, not the failure of it.</p>
+
+      <p>The Gospels show this signature clearly. They agree on every essential — Jesus claimed to be the Messiah, was crucified under Pilate, was buried, and was found alive on the third day by his followers — and they differ in exactly the small ways real eyewitnesses always differ.</p>
+
+      <div class="pullquote">
+        "If the four Gospel accounts had no apparent discrepancies, that would itself be evidence of editorial coordination. Their small disagreements are part of <em>why</em> they are credible."
+        <span class="pullquote-source">A standard observation in legal-historical method</span>
+      </div>
+
+      <p>Cold-case homicide detective J. Warner Wallace makes this case at length in <em>Cold-Case Christianity</em>, applying the same forensic principles he used to solve decades-old murders to the Gospel testimony. His conclusion, after years as a skeptic, was that the Gospels read like genuine eyewitness accounts and that the evidential standard for them is higher than for many cases that send people to prison.</p>
+    </div>
+  </section>
+
+  <!-- ============ EMMAUS-STYLE BENEDICTION ============ -->
+  <div class="benediction">
+    <div class="benediction-label">A Closing Blessing · The Word that Endures</div>
+    <h3>"Heaven and earth will pass away..."</h3>
+
+    <p>Among the strongest claims Jesus ever made was about the durability of his own words. Not just their truth — their <em>endurance</em>, against every wind that would weather them down across the centuries.</p>
+
+    <div class="benediction-verse">
+      <div class="verse-ref">Matthew 24:35</div>
+      <div class="benediction-verse-text">Heaven and earth will pass away, but my words will not pass away.</div>
+    </div>
+
+    <p>It was an audacious thing to say. Empires rose and fell. Languages went extinct. Manuscripts burned in libraries from Alexandria to Antioch. And yet, two thousand years later, the words of a Galilean carpenter — preserved in more manuscripts and earlier copies than any document from his world — are still being read this morning, in nearly every language on earth.</p>
+
+    <p>That doesn't <em>prove</em> they're true. But it does mean that the question they pose still stands open in front of every honest reader, including you. The text has done its part. It has come down to us astonishingly intact. The next move is ours.</p>
+
+    <div class="benediction-flame">✦ &nbsp; ✦ &nbsp; ✦</div>
+
+    <p class="prayer">May the words that have outlasted empires<br>find their way to your ear.<br>May you weigh them honestly,<br>and may the One who spoke them meet you in the reading.</p>
+  </div>
+
+  <!-- ============ CLOSING ============ -->
+  <div class="closing">
+    <div class="closing-mark">✦ ✦ ✦</div>
+    <p>The case for the Bible's reliability is not a private claim of faith. It is a public, historical claim that you can test, source by source, manuscript by manuscript.</p>
+    <p>Whatever you decide, the questions are worth your time. Few things are more precious than a friend who will sit with you in them.</p>
+    <p class="signature">— a study companion, given in friendship —</p>
+  </div>
+
+  <!-- ============ FORWARD NAV (back to study one) ============ -->
+  <a href="index.html" class="companion">
+    <div class="companion-inner forward">
+      <div class="companion-content">
+        <div class="companion-eyebrow">Begin again · Part One</div>
+        <div class="companion-title">The Promised One</div>
+      </div>
+      <div class="companion-arrow">→</div>
+    </div>
+  </a>
+
+</div>
+
+<script>
+  // Auto-convert all scripture references into BibleGateway ESV links.
+  (function() {
+    var BASE = 'https://www.biblegateway.com/passage/?version=ESV&search=';
+
+    function buildUrl(refText, contextBook) {
+      var clean = refText.trim().replace(/^[\(\[]+|[\)\]\.,;:]+$/g, '').trim();
+      clean = clean.replace(/[–—]/g, '-');
+      var verseOnlyMatch = clean.match(/^v{1,2}\.?\s*([\d\-,]+)$/i);
+      if (verseOnlyMatch && contextBook) {
+        clean = contextBook + ':' + verseOnlyMatch[1];
+      }
+      var chapVerseOnly = clean.match(/^(\d+:[\d\-,]+)$/);
+      if (chapVerseOnly && contextBook) {
+        clean = contextBook + ' ' + chapVerseOnly[1];
+      }
+      return BASE + encodeURIComponent(clean);
+    }
+
+    document.querySelectorAll('.ref').forEach(function(el) {
+      if (el.tagName === 'A') return;
+      var a = document.createElement('a');
+      a.href = buildUrl(el.textContent, null);
+      a.target = '_blank';
+      a.rel = 'noopener noreferrer';
+      a.className = 'ref';
+      a.innerHTML = el.innerHTML;
+      el.parentNode.replaceChild(a, el);
+    });
+
+    document.querySelectorAll('.verse-ref').forEach(function(el) {
+      var ref = el.textContent.split('—')[0].trim();
+      var a = document.createElement('a');
+      a.href = buildUrl(ref, null);
+      a.target = '_blank';
+      a.rel = 'noopener noreferrer';
+      a.className = 'verse-ref-link';
+      el.parentNode.insertBefore(a, el);
+      a.appendChild(el);
+    });
+  })();
+</script>
+</body>
+</html>

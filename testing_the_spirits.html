@@ -508,6 +508,12 @@
     color: var(--crimson);
   }
 
+  .companion-inner.forward { grid-template-columns: 1fr auto; }
+  .companion.forward:hover .companion-arrow {
+    transform: translateX(6px);
+    color: var(--crimson);
+  }
+
   /* ====== Mobile ====== */
   @media (max-width: 700px) {
     body { padding: 30px 18px; font-size: 16px; }
@@ -862,6 +868,17 @@
     <p>Whatever you decide, the questions are worth your time. Few things are more precious than a friend who will sit with you in them.</p>
     <p class="signature">— a study companion, given in friendship —</p>
   </div>
+
+  <!-- ============ FORWARD NAV ============ -->
+  <a href="why_this_book.html" class="companion forward">
+    <div class="companion-inner forward">
+      <div class="companion-content">
+        <div class="companion-eyebrow">Continue · Part Three</div>
+        <div class="companion-title">Why this Book?</div>
+      </div>
+      <div class="companion-arrow">→</div>
+    </div>
+  </a>
 
 </div>
 
